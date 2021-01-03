@@ -23,9 +23,7 @@ public class Debt {
 
     @Override
     public String toString() {
-        return "Debt{" +
-                "id=" + id +
-                ", amount=" + amount +
-                '}';
+        return "{ id : " + id
+                + ", amount : " + amount + " }";
     }
 }
