@@ -27,10 +27,11 @@ public class Debt {
                 + ", amount : " + amount + " }";
     }
 
-    public String toString(boolean paymentPlan, double amountOwed) {
+    public String toString(boolean paymentPlan, double amountOwed, String nextPaymentDate) {
         return "{ id : " + id
                 + ", amount : " + amount
                 + ", is_in_payment_plan : " + paymentPlan
-                + ", remaining_amount : " + amountOwed +  " }";
+                + ", remaining_amount : " + amountOwed
+                + ", next_payment_due_date : " + nextPaymentDate + " }";
     }
 }
