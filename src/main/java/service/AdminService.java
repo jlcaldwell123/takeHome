@@ -25,7 +25,9 @@ public class AdminService {
     public void printDebts() {
         if (debts != null && !debts.isEmpty()) {
             for (Debt debt: debts) {
-                System.out.println(debt.toString(isInPaymentPlan(debt)));
+                boolean isInPaymentPlan = isInPaymentPlan(debt);
+                double amountOwed = calculateRemainingAmount(debt);
+                System.out.println(debt.toString(isInPaymentPlan, amountOwed));
             }
         }
     }
@@ -42,5 +44,25 @@ public class AdminService {
         } else {
             return false;
         }
+    }
+
+    public double calculateRemainingAmount(Debt debt) {
+        double amountPaid = 0;
+        double amountOwed = debt.getAmount();
+        PaymentPlan foundPaymentPlan = null;
+        for (PaymentPlan paymentPlan: paymentPlans) {
+            if (paymentPlan.getDebt_id() == debt.getId()) {
+                foundPaymentPlan = paymentPlan;
+            }
+        }
+        if (foundPaymentPlan != null) {
+            for (Payment payment: payments) {
+                if (payment.getPayment_plan_id() == foundPaymentPlan.getId()) {
+                    amountPaid += payment.getAmount();
+                }
+            }
+            amountOwed -= amountPaid;
+        }
+        return amountOwed;
     }
 }
