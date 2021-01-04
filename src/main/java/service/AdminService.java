@@ -23,6 +23,24 @@ public class AdminService {
     }
 
     public void printDebts() {
-        System.out.println(debts);
+        if (debts != null && !debts.isEmpty()) {
+            for (Debt debt: debts) {
+                System.out.println(debt.toString(isInPaymentPlan(debt)));
+            }
+        }
+    }
+
+    public boolean isInPaymentPlan(Debt debt) {
+        if (debt != null && paymentPlans != null
+                && !paymentPlans.isEmpty()) {
+            for (PaymentPlan paymentPlan: paymentPlans) {
+                if (paymentPlan.getDebt_id() == debt.getId()) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 }

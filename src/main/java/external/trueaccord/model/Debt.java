@@ -26,4 +26,10 @@ public class Debt {
         return "{ id : " + id
                 + ", amount : " + amount + " }";
     }
+
+    public String toString(boolean paymentPlan) {
+        return "{ id : " + id
+                + ", amount : " + amount
+                + ", is_in_payment_plan : " + paymentPlan + " }";
+    }
 }

@@ -1,3 +1,4 @@
+import external.trueaccord.model.Debt;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,11 @@ public class MainTestCases {
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
     private AdminService adminService;
+    private String expectedDebtsOutput = "{ id : 0, amount : 123.46, is_in_payment_plan : true }\n" +
+            "{ id : 1, amount : 100.0, is_in_payment_plan : true }\n" +
+            "{ id : 2, amount : 4920.34, is_in_payment_plan : true }\n" +
+            "{ id : 3, amount : 12938.0, is_in_payment_plan : true }\n" +
+            "{ id : 4, amount : 9238.02, is_in_payment_plan : false }\n";
 
     @Before
     public void setUpStreams() {
@@ -29,8 +35,22 @@ public class MainTestCases {
     }
 
     @Test
-    public void out() {
+    public void printDebts() {
         adminService.printDebts();
-        assertEquals("[{ id : 0, amount : 123.46 }, { id : 1, amount : 100.0 }, { id : 2, amount : 4920.34 }, { id : 3, amount : 12938.0 }, { id : 4, amount : 9238.02 }]\n", outContent.toString());
+        assertEquals(expectedDebtsOutput, outContent.toString());
+    }
+
+    @Test
+    public void debtInPaymentPlan() {
+        Debt debt = new Debt();
+        debt.setId(1);
+        assertEquals(true, adminService.isInPaymentPlan(debt));
+    }
+
+    @Test
+    public void debtNotInPaymentPlan() {
+        Debt debt = new Debt();
+        debt.setId(55);
+        assertEquals(false, adminService.isInPaymentPlan(debt));
     }
 }
