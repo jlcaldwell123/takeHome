@@ -1,4 +1,4 @@
-TrueAccord Take Home
+###### **TrueAccord Take Home**
 
 This is my submission for the TrueAccord take home. It took me about 2 and a half hours in total, with the first hour spent mainly researching a java client. The one i normally use is part of springboot framework, so had to find a standalone one.
 
