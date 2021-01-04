@@ -5,6 +5,7 @@ import external.trueaccord.model.Payment;
 import external.trueaccord.model.PaymentPlan;
 import external.trueaccord.service.TrueAccordService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,9 +33,9 @@ public class AdminService {
         if (debts != null && !debts.isEmpty()) {
             for (Debt debt: debts) {
                 boolean isInPaymentPlan = isInPaymentPlan(debt);
-                double amountOwed = calculateRemainingAmount(debt);
+                BigDecimal amountOwed = calculateRemainingAmount(debt);
                 String nextPaymentDate = null;
-                if (isInPaymentPlan && amountOwed > 0) {
+                if (isInPaymentPlan && (amountOwed.compareTo(BigDecimal.ZERO) > 0)) {
                     nextPaymentDate = getNextPaymentDate(debt);
                 }
                 System.out.println(debt.toString(isInPaymentPlan, amountOwed, nextPaymentDate));
@@ -56,9 +57,9 @@ public class AdminService {
         }
     }
 
-    public double calculateRemainingAmount(Debt debt) {
-        double amountPaid = 0;
-        double amountOwed = debt.getAmount();
+    public BigDecimal calculateRemainingAmount(Debt debt) {
+        BigDecimal amountPaid = new BigDecimal(0);
+        BigDecimal amountOwed = debt.getAmount();
         PaymentPlan foundPaymentPlan = null;
         for (PaymentPlan paymentPlan: paymentPlans) {
             if (paymentPlan.getDebt_id() == debt.getId()) {
@@ -68,10 +69,10 @@ public class AdminService {
         if (foundPaymentPlan != null) {
             for (Payment payment: payments) {
                 if (payment.getPayment_plan_id() == foundPaymentPlan.getId()) {
-                    amountPaid += payment.getAmount();
+                    amountPaid = amountPaid.add(payment.getAmount());
                 }
             }
-            amountOwed -= amountPaid;
+            amountOwed = amountOwed.subtract(amountPaid);
         }
         return amountOwed;
     }

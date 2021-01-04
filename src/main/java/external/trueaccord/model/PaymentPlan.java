@@ -1,12 +1,14 @@
 package external.trueaccord.model;
 
+import java.math.BigDecimal;
+
 public class PaymentPlan {
 
     private int id;
     private int debt_id;
-    private double amount_to_pay;
+    private BigDecimal amount_to_pay;
     private String installment_frequency;
-    private double installment_amount;
+    private BigDecimal installment_amount;
     private String start_date;
 
     public int getId() {
@@ -25,11 +27,11 @@ public class PaymentPlan {
         this.debt_id = debt_id;
     }
 
-    public double getAmount_to_pay() {
+    public BigDecimal getAmount_to_pay() {
         return amount_to_pay;
     }
 
-    public void setAmount_to_pay(double amount_to_pay) {
+    public void setAmount_to_pay(BigDecimal amount_to_pay) {
         this.amount_to_pay = amount_to_pay;
     }
 
@@ -41,11 +43,11 @@ public class PaymentPlan {
         this.installment_frequency = installment_frequency;
     }
 
-    public double getInstallment_amount() {
+    public BigDecimal getInstallment_amount() {
         return installment_amount;
     }
 
-    public void setInstallment_amount(double installment_amount) {
+    public void setInstallment_amount(BigDecimal installment_amount) {
         this.installment_amount = installment_amount;
     }
 
